@@ -5,7 +5,6 @@
 /*!40101 SET NAMES utf8mb4 */;
 
 -- --------------------------------------------------------
-USE W3Schools;
 
 --
 -- Table structure for table categories
@@ -1083,7 +1082,7 @@ INSERT INTO suppliers (SupplierID, SupplierName, ContactName, Address, City, Pos
 (15, 'Norske Meierier', 'Beate Vileid', 'Hatlevegen 5', 'Sandvika', '1320', 'Norway', '(0)2-953010'),
 (16, 'Bigfoot Breweries', 'Cheryl Saylor', '3400 - 8th Avenue Suite 210', 'Bend', '97101', 'USA', '(503) 555-9931'),
 (17, 'Svensk Sjöföda AB', 'Michael Björn', 'Brovallavägen 231', 'Stockholm', 'S-123 45', 'Sweden', '08-123 45 67'),
-(18, 'Aux joyeux ecclésiastiques', 'Guylène Nodier', '203, Rue des Francs-Bourgeois', 'Paris', '75004', 'France', '(1) 03.83.00.68'),
+(18, 'Aux joyeux ecclésiastiques', 'Guylène Nodier', '203, Rue des Francs-Bourgeois', 'Paris', '75004', 'France', '232'),
 (19, 'New England Seafood Cannery', 'Robb Merchant', 'Order Processing Dept. 2100 Paul Revere Blvd.', 'Boston', '02134', 'USA', '(617) 555-3267'),
 (20, 'Leka Trading', 'Chandra Leka', '471 Serangoon Loop, Suite #402', 'Singapore', '0512', 'Singapore', '555-8787'),
 (21, 'Lyngbysild', 'Niels Petersen', 'Lyngbysild Fiskebakken 10', 'Lyngby', '2800', 'Denmark', '43844108'),
@@ -1092,8 +1091,8 @@ INSERT INTO suppliers (SupplierID, SupplierName, ContactName, Address, City, Pos
 (24, 'G''day, Mate', 'Wendy Mackenzie', '170 Prince Edward Parade Hunter''s Hill', 'Sydney', '2042', 'Australia', '(02) 555-5914'),
 (25, 'Ma Maison', 'Jean-Guy Lauzon', '2960 Rue St. Laurent', 'Montréal', 'H1J 1C3', 'Canada', '(514) 555-9022'),
 (26, 'Pasta Buttini s.r.l.', 'Giovanni Giudici', 'Via dei Gelsomini, 153', 'Salerno', '84100', 'Italy', '(089) 6547665'),
-(27, 'Escargots Nouveaux', 'Marie Delamare', '22, rue H. Voiron', 'Montceau', '71300', 'France', '85.57.00.07'),
-(28, 'Gai pâturage', 'Eliane Noz', 'Bat. B 3, rue des Alpes', 'Annecy', '74000', 'France', '38.76.98.06'),
+(27, 'Escargots Nouveaux', 'Marie Delamare', '22, rue H. Voiron', 'Montceau', '71300', 'France', '123'),
+(28, 'Gai pâturage', 'Eliane Noz', 'Bat. B 3, rue des Alpes', 'Annecy', '74000', 'France', '123'),
 (29, 'Forêts d''érables', 'Chantal Goulet', '148 rue Chasseur', 'Ste-Hyacinthe', 'J2S 7S8', 'Canada', '(514) 555-2955');
 
 --
@@ -1137,22 +1136,26 @@ ALTER TABLE products
   ADD PRIMARY KEY (ProductID);
 
 ALTER TABLE orders
-  ADD PRIMARY KEY (OrderID)
+  ADD PRIMARY KEY (OrderID);
 --
 -- Indexes for table orders
 --
 ALTER TABLE orders
   ADD
-  FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID),
-  FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID),
-  FOREIGN KEY (ShipperID) REFERENCES Shippers(ShipperID);
+  FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID);
+  ALTER TABLE orders
+  ADD FOREIGN KEY (EmployeeID) REFERENCES Employees(EmployeeID);
+  ALTER TABLE orders
+  ADD FOREIGN KEY (ShipperID) REFERENCES Shippers(ShipperID);
 
 --
 -- Indexes for table order_details
 --
 ALTER TABLE order_details
   ADD
-  FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+  FOREIGN KEY (OrderID) REFERENCES Orders(OrderID);
+  ALTER TABLE order_details
+  ADD
   FOREIGN KEY (ProductID) REFERENCES Products(ProductID);
 
 --
@@ -1160,5 +1163,8 @@ ALTER TABLE order_details
 --
 ALTER TABLE products
   ADD
-  FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID),
+  FOREIGN KEY (CategoryID) REFERENCES Categories(CategoryID);
+  --
+ALTER TABLE products
+  ADD
   FOREIGN KEY (SupplierID) REFERENCES Suppliers(SupplierID);
